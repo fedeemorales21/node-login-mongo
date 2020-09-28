@@ -8,15 +8,16 @@ const User = require('../models/User')
 usersController.renderLogin = (req,res) => res.render('users/login')
 
 usersController.signIn = passport.authenticate('local', {
-    failureRedirect: '/users/login',
-    successRedirect: 'privates/main',
-    failureFlash: true
+    failureRedirect: 'login',
+    successRedirect: 'private',
+    failureFlash: true,
+    successFlash: true
 })
 
 usersController.logout = (req,res) =>{
     req.logout()
     req.flash('success', 'Goodbye')
-    res.redirect('/users/login')
+    res.redirect('login')
 }
 
 usersController.renderRegister = (req,res) => res.render('users/register')
@@ -54,7 +55,7 @@ usersController.signUp = async (req,res) => {
     }
 
     const userEmail = User.findOne({email})
-    if (userEmail) {
+    if (!userEmail) {
         req.flash('fail', 'Email already registered')
         res.render('users/register', { 
             name,
@@ -67,7 +68,7 @@ usersController.signUp = async (req,res) => {
     newUser.password = await newUser.hashingPassword(password)
     await newUser.save()
     req.flash('success','User Created')
-    res.redirect('users/login')
+    res.redirect('login')
 }
 
 module.exports = usersController

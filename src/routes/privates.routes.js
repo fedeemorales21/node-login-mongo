@@ -5,6 +5,6 @@ const { checkPermission } = require('../helpers/check')
 
 const { renderPrivate } = require('../controllers/private.controller')
 
-router.get('/', checkPermission , renderPrivate)
+router.get('/private', checkPermission , renderPrivate)
 
 module.exports = router

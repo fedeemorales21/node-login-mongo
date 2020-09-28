@@ -1,8 +1,9 @@
 const check = {}
 
 check.checkPermission = (req,res,next) => {
-    if (req.checkPermission()) return next()
-    res.redirect('/users/login')    
+    if (req.isAuthenticated()) return next()
+    req.flash('fail','Login first')
+    res.redirect('login')    
 }
 
 module.exports = check

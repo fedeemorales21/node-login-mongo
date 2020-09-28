@@ -13,7 +13,7 @@ router.get('/login', renderLogin )
 
 router.post('/signin', signIn)
 
-router.post('/logout', logout)
+router.get('/logout', logout)
 
 router.get('/register', renderRegister)
 
